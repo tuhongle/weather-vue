@@ -1,13 +1,21 @@
 <template>
   <div class="card shadow-lg">
     <div class="card-body p-5 text-center">
-        <div class="form-group mb-5">
-            <input type="text" ref="input" class="text-secondary fs-5 form-control rounded-pill shadow-none py-3" placeholder="Search city" v-model="city" @keydown.enter="searchCity">
+        <div class="form-group mb-5 dropdown">
+            <input type="search" ref="input" class="text-secondary fs-5 form-control rounded-pill shadow-none py-3" placeholder="Search city" v-model="city" @keydown.enter="searchCity" @keypress="showSelectCitites">
             <p class="small country">{{ country }}</p>
+            <ul v-if="selectCities.length" class="cities-list list-unstyled w-100 shadow">
+                <li class="form-check city-item text-start ps-0" v-for="(selectCity, index) in selectCities" :key="index">
+                    <label class="form-check-label py-2 ps-3 w-100" @click="delaySearchCity">
+                        <input type="radio" v-model="city" :value="selectCity" class="form-check-input d-none">
+                        {{ selectCity }}
+                    </label>
+                </li>
+            </ul>
         </div>
         <p class="text-muted mb-5 display-6">Feels Like <span class="fw-bold display-5">{{ feelsLike }}<sup>o</sup></span></p>
-        <div class="weather-temperature mx-auto mb-5 bg-white shadow d-flex align-items-center justify-content-center">
-            <p class="display-3 text-dark fw-bolder">{{ temp }}</p>
+        <div class="weather-temperature mx-auto mb-5 bg-white shadow-lg d-flex align-items-center justify-content-center">
+            <p class="display-2 text-dark fw-bolder">{{ temp }}</p>
             <div class="temp-icons">
                 <img :src="'https:' + iconLink" alt="">
             </div>
@@ -51,6 +59,20 @@ export default {
             iconLink: '',
         }
     },
+    computed: {
+        selectCities() {
+            if (this.city.trim().length > 2) {
+                const lists = this.citiesList.filter((el) => el.includes(this.city));
+                if (lists.length >= 7) {
+                    return lists.slice(0,7);
+                } else {
+                    return lists;
+                }
+            } else {
+                return [];
+            }
+        }
+    },
     methods: {
         getWeatherInfo: async function() {
             try {
@@ -86,7 +108,25 @@ export default {
             this.wind = this.weatherInfo.current.wind_kph;
             this.humidity = this.weatherInfo.current.humidity;
             this.cloud = this.weatherInfo.current.cloud;
-        }
+            this.selectCities = [''];
+        },
+        /* showSelectCitites() {
+            if (this.city.length >= 3) {
+                const lists = this.citiesList.filter((el) => el.includes(this.city));
+                if (lists.length >= 7) {
+                    this.selectCities = lists.slice(0,7);
+                } else {
+                    this.selectCities = lists;
+                }
+            } else if (this.city.length < 3) {
+                this.selectCities = [];
+            }
+        }, */
+        delaySearchCity() {
+            setTimeout(()=> {
+                this.searchCity();
+            },100);
+        },
     },
     async mounted() {
         new Tooltip(document.body, {
@@ -102,6 +142,7 @@ export default {
         this.wind = this.weatherInfo.current.wind_kph;
         this.humidity = this.weatherInfo.current.humidity;
         this.cloud = this.weatherInfo.current.cloud;
+        this.selectCities = [];
     },
     async updated() {
         this.weatherInfo = await this.getWeatherInfo();
