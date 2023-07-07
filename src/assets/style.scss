@@ -15,6 +15,21 @@ $bootstrap-icons-font-dir: "bootstrap-icons/font/fonts";
     100% {right: -50%;}
 }
 
+@keyframes raindrop-1 {
+    0% {top: -50%}
+    100% {top: 50%}
+}
+
+@keyframes raindrop-2 {
+    0% {top: -50%}
+    100% {top: 50%}
+}
+
+@keyframes zoomin {
+    0% {transform: scale(0.7);}
+    100% {transform: scale(1);}
+}
+
 body {
     #app {
         width: 100vw;
@@ -33,11 +48,15 @@ body {
             .form-group {
                 position: relative;
                 input[type='search'] {
+                    position: relative;
                     background-color: #F1F1F1;
                     border: 2px solid $gray-400 !important;
                     padding-left: 30px;
                     transition: all 0.25s linear;
                     font-family: Jost, Lato, sans-serif !important;
+                    z-index: 9999;
+                    padding-top: 12px;
+                    padding-bottom: 12px;
     
                     &::placeholder {
                         opacity: 0.5;
@@ -45,6 +64,8 @@ body {
     
                     &:focus {
                         background-color: #FFF;
+                        font-weight: bold !important;
+                        color: #000;
                         outline: none;
                         box-shadow: 0px 15px 20px $gray-500 !important;
                     }
@@ -60,15 +81,19 @@ body {
 
                 ul.cities-list {
                     position: absolute;
-                    z-index: 9999;
-                    background-color: #F1F1F1;
+                    z-index: 999;
+                    background-color: $gray-500;
+                    padding-top: 35px;
+                    padding-bottom: 10px;
+                    transform: translateY(-35px);
+                    border-radius: 0 0 15px 15px;
 
                     li.city-item {
                         height: 30px;
                         label {
                             transition: all 0.25s linear;
                             &:hover {
-                                background-color: $gray-500;
+                                background-color: $gray-700;
                                 cursor: pointer;
                                 color: $light;
                             }
@@ -129,12 +154,14 @@ body {
         }
 
         .weather-backdrop {
-            &.weather-clouds {
+            &.weather-cloudy {
                 background: url('./images/cloudy.jpg') no-repeat center center / cover;
                 width: 100vw;
                 height: 100vh;
                 position: relative;
                 overflow: hidden;
+                animation: zoomin 0.5s linear;
+                transition: all 0.5s linear;
 
                 &::before {
                     content: "";
@@ -144,7 +171,7 @@ body {
                     height: 30vh;
                     width: 100vw;
                     background: url('./images/clouds.png') no-repeat center center / contain;
-                    animation: moveright 30s linear infinite;
+                    animation: moveright 70s linear infinite;
                 }
 
                 &::after {
@@ -155,8 +182,73 @@ body {
                     height: 30vh;
                     width: 100vw;
                     background: url('./images/clouds.png') no-repeat center center / contain;
-                    animation: moveleft 30s linear infinite;
+                    animation: moveleft 70s linear infinite;
                 }
+            }
+
+            &.weather-sunny {
+                background: url('./images/sunny.jpg') no-repeat center center / cover;
+                width: 100vw;
+                height: 100vh;
+                position: relative;
+                overflow: hidden;
+                animation: zoomin 0.5s linear;
+                transition: all 0.5s linear;
+
+                &::before {
+                    content: "";
+                    position: absolute;
+                    top: 0;
+                    left: -50%;
+                    height: 100vh;
+                    width: 100vw;
+                    background: url('./images/clouds.png') no-repeat center center / contain;
+                    animation: moveright 70s linear infinite;
+                }
+            }
+
+            &.weather-rainy {
+                background: url('./images/rainy.jpg') no-repeat center center / cover;
+                width: 100vw;
+                height: 100vh;
+                position: relative;
+                overflow: hidden;
+                animation: zoomin 0.5s linear;
+                transition: all 0.5s linear;
+
+                &::before {
+                    content: "";
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    height: 100vh;
+                    width: 100vw;
+                    background: url('./images/rainfall1.png') no-repeat center center / cover;
+                    animation: raindrop-1 70s linear infinite;
+                }
+
+                &::after {
+                    content: "";
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    height: 100vh;
+                    width: 100vw;
+                    background: url('./images/rainfall2.png') no-repeat center center / cover;
+                    animation: raindrop-2 70s linear 35s infinite;
+                }  
+            }
+
+            &.error {
+                background: url('./images/error.jpg') no-repeat center center / cover;
+                width: 100vw;
+                height: 100vh;
+                position: relative;
+                overflow: hidden;
+                animation: zoomin 0.5s linear;
+                transition: all 0.5s linear;
             }
         }
     }
