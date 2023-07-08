@@ -57,6 +57,8 @@ body {
                     z-index: 9999;
                     padding-top: 12px;
                     padding-bottom: 12px;
+                    // text-transform: capitalize;
+                    transition: all 0.15s linear;
     
                     &::placeholder {
                         opacity: 0.5;
@@ -68,6 +70,10 @@ body {
                         color: #000;
                         outline: none;
                         box-shadow: 0px 15px 20px $gray-500 !important;
+                    }
+
+                    &:not(:focus) {
+                        text-transform: capitalize !important;
                     }
                 }
     
@@ -149,6 +155,11 @@ body {
             .weather-info {
                 p {
                     letter-spacing: 1px;
+                    &:hover {
+                        color:#000;
+                        font-weight: bold;
+                        cursor: default;
+                    }
                 }
             }
         }
@@ -160,7 +171,6 @@ body {
                 height: 100vh;
                 position: relative;
                 overflow: hidden;
-                animation: zoomin 0.5s linear;
                 transition: all 0.5s linear;
 
                 &::before {
@@ -192,7 +202,6 @@ body {
                 height: 100vh;
                 position: relative;
                 overflow: hidden;
-                animation: zoomin 0.5s linear;
                 transition: all 0.5s linear;
 
                 &::before {
@@ -213,7 +222,6 @@ body {
                 height: 100vh;
                 position: relative;
                 overflow: hidden;
-                animation: zoomin 0.5s linear;
                 transition: all 0.5s linear;
 
                 &::before {
@@ -224,8 +232,8 @@ body {
                     right: 0;
                     height: 100vh;
                     width: 100vw;
-                    background: url('./images/rainfall1.png') no-repeat center center / cover;
-                    animation: raindrop-1 70s linear infinite;
+                    background: (url('./images/rainfall2.png'), url('./images/rainfall1.png')) no-repeat center center / cover;
+                    animation: raindrop-1 70s linear -35s infinite;
                 }
 
                 &::after {
@@ -236,20 +244,42 @@ body {
                     right: 0;
                     height: 100vh;
                     width: 100vw;
-                    background: url('./images/rainfall2.png') no-repeat center center / cover;
-                    animation: raindrop-2 70s linear 35s infinite;
+                    background: (url('./images/rainfall2.png'), url('./images/rainfall1.png')) no-repeat center center / cover;
+                    animation: raindrop-2 70s linear infinite;
                 }  
             }
 
-            &.error {
+            &.weather-error {
                 background: url('./images/error.jpg') no-repeat center center / cover;
                 width: 100vw;
                 height: 100vh;
                 position: relative;
                 overflow: hidden;
-                animation: zoomin 0.5s linear;
                 transition: all 0.5s linear;
             }
         }
     }
+}
+
+/* vue transition */
+.weather-enter-from {
+    transform: scale(1.2);
+    opacity: 0;
+}
+
+.weather-leave-to {
+    transform: scale(1.5);
+    opacity: 0;
+}
+
+.weather-enter-active,
+.weather-leave-active,
+.weatherCard-enter-active,
+.weatherCard-leave-active {
+    transition: all 2s ease-out;
+}
+
+.weatherCard-enter-from,
+.weatherCard-leave-to {
+    opacity: 0;
 }

@@ -1,6 +1,10 @@
 <template>
-  <Weather @updateProps="changeBackground"/>
-  <div class="weather-backdrop" :class="{'weather-sunny': sunny, 'weather-rainy': rainy, 'weather-cloudy': cloudy, 'error': error}"></div>
+  <Transition name="weatherCard" appear>
+    <Weather @updateProps="changeBackground"/>
+  </Transition>
+  <Transition name="weather" appear v-for="info in weatherInfo" :key="info">
+    <div v-if="info.value" class="weather-backdrop" :class="'weather-' + info.title"></div>
+  </Transition>
 </template>
 
 <script>
@@ -13,18 +17,22 @@ export default {
   },
   data() {
     return {
-      rainy : false,
-      cloudy: true,
-      sunny: false,
-      error: false,
+      weatherInfo : [
+        {title: "rainy", value: false},
+        {title: "cloudy", value: true},
+        {title: "sunny", value: false},
+        {title: "error", value: false},
+      ],
     }
   },
   methods: {
     changeBackground(info) {
-      this.rainy = info[0];
-      this.cloudy = info[1];
-      this.sunny = info[2];
-      this.error = info[3];
+      this.weatherInfo = [
+        {title: "rainy", value: info[0]},
+        {title: "cloudy", value: info[1]},
+        {title: "sunny", value: info[2]},
+        {title: "error", value: info[3]},
+      ];
     }
   }
 }

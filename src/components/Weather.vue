@@ -56,6 +56,7 @@ export default {
             startSearch: false,
             country: '',
             citiesList: [],
+            lists: [],
             weatherInfo: {},
             feelsLike: null,
             temp: null,
@@ -68,13 +69,8 @@ export default {
     },
     computed: {
         selectCities() {
-            if (this.city.length > 2) {
-                const lists = this.citiesList.filter((el) => el.includes(this.city.toLowerCase()));
-                if (lists.length >= 7) {
-                    return lists.slice(0,7);
-                } else {
-                    return lists;
-                }
+            if (this.city.length > 0) {
+                return this.citiesList.filter((el) => el.includes(this.city.toLowerCase()));
             } else {
                 return [];
             }
@@ -97,14 +93,12 @@ export default {
         },
         getCitiesList: async function() {
             try {
-                const lists = [];
-                const linkToFetch = 'https://countriesnow.space/api/v0.1/countries';
+                const linkToFetch = 'https://dataservice.accuweather.com/locations/v1/topcities/150?apikey=fSAUQ4Qon5w1owbZeNvwKVB07RVplYch';
                 const Response = await fetch(linkToFetch);
                 const jsonResponse = await Response.json();
-                jsonResponse.data.map((el) => {
-                    lists.push(...el.cities.map(el => el.toLowerCase()));
+                return jsonResponse.map((el) => {
+                    return [el.EnglishName, el.Country.ID];
                 });
-                return lists;
             } catch (err) {
                 console.log(err);
             }
@@ -164,7 +158,11 @@ export default {
         },
     },
     async created() {
-        this.citiesList = await this.getCitiesList();
+        this.lists = await this.getCitiesList();
+        this.citiesList = this.lists.map((el) => {
+            return el[0].toLowerCase();
+        });
+        console.log(this.citiesList);
     },
     async mounted() {
         new Tooltip(document.body, {
