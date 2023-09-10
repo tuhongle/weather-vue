@@ -6,12 +6,24 @@ $info: #B7A0E5;
 $gray-100: #1D1B1F;
 $gray-300: #1A191D;
 $dark: #131216;
+$green: #9DD84E;
+$yellow: #F9CF39;
+$orange: #F99049;
+$red: #F65E5F;
+$purple: #A070B6;
+$coral: #A06A7B;
 
 $theme-colors: map-merge($theme-colors , (
     'info': $info,
     'gray-100': $gray-100,
     'gray-300': $gray-300,
-    'dark': $dark
+    'dark': $dark,
+    'green': $green,
+    'yellow': $yellow,
+    'orange': $orange,
+    'red': $red,
+    'purple': $purple,
+    'coral': $coral,
 ));
 
 $font-family-base: 'Rubik', sans-serif;
@@ -22,10 +34,12 @@ $bootstrap-icons-font-dir: "bootstrap-icons/font/fonts";
 
 #app {
     nav {
-        input[type="text"] {
+        label {
             width: 400px;
-            &::placeholder {
-                color: $secondary;
+            input[type="text"] {
+                &::placeholder {
+                    color: $secondary;
+                }
             }
         }
         @media screen and (width < 768px) {
