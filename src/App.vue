@@ -3,6 +3,7 @@ import WeatherPage from './components/weather.vue'
 import { storeToRefs } from 'pinia';
 import { useWeatherStore } from './stores/weatherStore'
 import { watch } from 'vue'
+import { type DayNight, Condition } from './types/weatherTypes'
 
 const weatherStore = useWeatherStore();
 const { city, cityList, cityPicked, cityNamePicked, isCityPicked, isWeatherDetails, isDay, conditionWeather, recentCities } = storeToRefs(weatherStore);
@@ -14,12 +15,16 @@ watch(city, async () => {
   }
 })
 
+function getImageUrl(daynight : DayNight | undefined, condition : Condition | undefined) {
+  return new URL(`./assets/images/${daynight}/${condition}.jpg`, import.meta.url).href;
+}
+
 </script>
 
 <template>
   <main 
   class="vh-100 vw-100 text-light overflow-x-hidden hideScrollbar" 
-  :style="cityNamePicked ? `background: url(/images/${isDay}/${conditionWeather}.jpg) center center / cover !important` : 'background-color: #131216'"
+  :style="cityNamePicked ? `background: url(${getImageUrl(isDay, conditionWeather)}) center center / cover !important` : 'background-color: #131216'"
   >
     <nav class="navbar navbar-expand py-3">
       <div class="container-fluid justify-content-between align-items-center">
