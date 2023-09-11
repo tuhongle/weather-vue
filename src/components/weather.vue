@@ -7,14 +7,14 @@
               <div class="card-body text-light">
                 <div class="d-flex justify-content-between align-items-center">
                   <h3 class="fw-light mb-0">Now</h3>
-                  <p class="lead mb-0 text-secondary">{{ weatherDetails.location.localtime.substring(11) }}</p>
+                  <p class="lead mb-0 text-secondary" :class="{'opacity-50': flash}">{{ realTimeClock }}</p>
                 </div>
-                <div class="row align-items-center flex-nowrap">
+                <div class="row align-items-center flex-nowrap mt-3">
                   <div class="col">
-                    <p class="mb-1" style="font-size: 5rem;">{{ weatherDetails.current.temp_c }}<sup>o<sub>c</sub></sup></p>
+                    <p class="mb-1" style="font-size: 3.5rem;">{{ weatherDetails.current.temp_c }}<sup>o<sub>c</sub></sup></p>
                   </div>
-                  <div class="col">
-                    <img :src="weatherDetails.current.condition.icon" alt="113" width="120" style="transform: scale(1.3)">
+                  <div class="col text-end">
+                    <img :src="weatherDetails.current.condition.icon" alt="113" width="80" style="transform: scale(1.3)">
                   </div>
                 </div>
                 <p>{{ weatherDetails.current.condition.text }}</p>
@@ -197,5 +197,8 @@ import { storeToRefs } from 'pinia';
 import { useWeatherStore } from '../stores/weatherStore'
 
 const weatherStore = useWeatherStore();
-const { weatherDetails, city, todayDetails } = storeToRefs(weatherStore);
+const { weatherDetails, todayDetails, realTimeClock, flash } = storeToRefs(weatherStore);
+
+await weatherStore.getWeatherDetails();
+
 </script>

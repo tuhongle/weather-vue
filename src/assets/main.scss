@@ -3,6 +3,7 @@
 @import '../../node_modules/bootstrap/scss/variables';
 
 $info: #B7A0E5;
+$secondary: rgb(224, 224, 224);
 $gray-100: #1D1B1F;
 $gray-300: #1A191D;
 $dark: #131216;
@@ -15,6 +16,7 @@ $coral: #A06A7B;
 
 $theme-colors: map-merge($theme-colors , (
     'info': $info,
+    'secondary': $secondary,
     'gray-100': $gray-100,
     'gray-300': $gray-300,
     'dark': $dark,
@@ -59,13 +61,45 @@ $bootstrap-icons-font-dir: "bootstrap-icons/font/fonts";
     }
 
     .hideScrollbar {
-        /* Hide scrollbar for Chrome, Safari and Opera */
-        &::-webkit-scrollbar {
-            display: none;
+        @media screen and (width < 576px) {
+            /* Hide scrollbar for Chrome, Safari and Opera */
+            &::-webkit-scrollbar {
+                display: none;
+            }
+            
+            /* Hide scrollbar for IE, Edge and Firefox */
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
         }
-        
-        /* Hide scrollbar for IE, Edge and Firefox */
-        -ms-overflow-style: none;  /* IE and Edge */
-        scrollbar-width: none;  /* Firefox */
+    }
+
+    .bg-gray-100 {
+        background-color: rgba(29, 27, 31, 0.5) !important;
+    }
+
+    .bg-gray-300 {
+        background-color: rgba(26, 25, 29, 0.25) !important;
+    }
+}
+
+#modal {
+    input[type="text"] {
+        &::placeholder {
+            color: $secondary;
+        }
+    }
+}
+
+#app, #modal {
+    .citypicked {
+        &:hover {
+            cursor: pointer;
+            background-color: rgba(29, 27, 31, 0.5);
+            transform: scale(1.01);
+        };
+
+        input[type="radio"] {
+            pointer-events: none;
+        };
     }
 }
