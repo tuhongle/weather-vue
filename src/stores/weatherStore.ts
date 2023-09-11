@@ -27,12 +27,12 @@ export const useWeatherStore = defineStore('weather', () => {
 
     const hideModal = () => {
         const myModalEl = document.getElementById('searchModal');
-        const modal = Modal.getInstance(myModalEl)
-        modal.hide();
+        const modal = Modal.getInstance(myModalEl!)
+        modal!.hide();
     };
     
     const getCities = async () => {
-        const baseURL = `http://api.weatherapi.com/v1/search.json?key=${apiKey}&q=${city.value}`;
+        const baseURL = `https://api.weatherapi.com/v1/search.json?key=${apiKey}&q=${city.value}`;
         const response = await fetch(baseURL);
         const data = await response.json();
         cityList.value = data.map((el: any) => {
@@ -47,7 +47,7 @@ export const useWeatherStore = defineStore('weather', () => {
     const getWeatherDetails = async () => {
         try {
             const query = cityPicked.value ? cityPicked.value : city.value;
-            const baseURL = `http://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${query}&days=3&aqi=yes&alerts=yes`;
+            const baseURL = `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${query}&days=3&aqi=yes&alerts=yes`;
             const response = await fetch(baseURL);
             weatherDetails.value = await response.json();
             isDay.value = (weatherDetails.value.current.is_day) ? 'day' : 'night';

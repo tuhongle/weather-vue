@@ -61,7 +61,9 @@ watch(city, async () => {
       <Suspense>
           <WeatherPage />
           <template #fallback>
-            Loading...
+            <div class="spinner-grow" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
           </template>
       </Suspense>
     </section>
