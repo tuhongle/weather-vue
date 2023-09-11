@@ -1,4 +1,30 @@
 @import url('https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import '../../node_modules/bootstrap/scss/functions';
+@import '../../node_modules/bootstrap/scss/variables';
+
+$info: #B7A0E5;
+$gray-100: #1D1B1F;
+$gray-300: #1A191D;
+$dark: #131216;
+$green: #9DD84E;
+$yellow: #F9CF39;
+$orange: #F99049;
+$red: #F65E5F;
+$purple: #A070B6;
+$coral: #A06A7B;
+
+$theme-colors: map-merge($theme-colors , (
+    'info': $info,
+    'gray-100': $gray-100,
+    'gray-300': $gray-300,
+    'dark': $dark,
+    'green': $green,
+    'yellow': $yellow,
+    'orange': $orange,
+    'red': $red,
+    'purple': $purple,
+    'coral': $coral,
+));
 
 $font-family-base: 'Rubik', sans-serif;
 
@@ -7,28 +33,39 @@ $bootstrap-icons-font-dir: "bootstrap-icons/font/fonts";
 @import "bootstrap-icons/font/bootstrap-icons.scss";
 
 #app {
-    #icons {
-        h1 {
-            font-size: 4rem;
-            @media screen and (width > 768px) {
-                font-size: 5rem;
+    nav {
+        label {
+            width: 400px;
+            input[type="text"] {
+                &::placeholder {
+                    color: $secondary;
+                }
+            }
+        }
+        @media screen and (width < 768px) {
+            label, button {
+                border-radius: 50% !important;
+                width: 30px;
+                aspect-ratio: 1 / 1;
+                justify-content: center;
+            }
+
+            button {
+                svg {
+                    font-size: 1.5rem;
+                }
             }
         }
     }
 
-    #weather {
-        background-color: rgba(0, 0, 0, 0.35);
-
-        input[type="text"] {
-            border-bottom: 1px solid white;
-
-            &::placeholder {
-                color: rgba(255, 255, 255, 0.5);
-            }
+    .hideScrollbar {
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        &::-webkit-scrollbar {
+            display: none;
         }
-
-        button.btn {
-            aspect-ratio: 1 / 1;
-        }
+        
+        /* Hide scrollbar for IE, Edge and Firefox */
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
     }
 }
